@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Ticket Tracking Application</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container my-2">
+		<h1>Ticket Tracking Application</h1>
+		<hr>
+		<br>
+		<h3>List Tickets</h3>
+		<a th:href="@{/tickets/register}" class="btn btn-primary btn-sm mb-3">New
+			Tickets</a>
+		<div class="topnav pl-5">
+			<form th:action="@{/tickets/search}" method="GET">
+				<input type="text" name="keyword" th:value="${keyword}"
+					placeholder="Find by Ticket Title or Ticket Description" size="50">
+				<button type="submit" class="btn btn-primary">Search</button>
+			</form>
+		</div>
+
+
+		<table style="width: 80%" border="1"
+			class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Ticket Title</th>
+					<th>Ticket Short Description</th>
+					<th>Ticket Created On</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="tickets:${allticketlist}">
+					<td th:text="${tickets.id}"></td>
+					<td th:text="${tickets.title}"></td>
+					<td th:text="${tickets.description}"></td>
+					<td th:text="${tickets.createdOn}"></td>
+					<td><a th:href="@{/tickets/updateInfo/{id}(id=${tickets.id})}"
+						class="btn btn-primary">Update</a> <a
+						th:href="@{/tickets/delete/{id}(id=${tickets.id})}"
+						class="btn btn-danger">Delete</a> <a
+						th:href="@{/tickets/view/{id}(id=${tickets.id})}"
+						class="btn btn-info">View</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
